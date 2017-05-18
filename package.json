@@ -21,6 +21,13 @@
     "babel-preset-react": "^6.24.1",
     "babel-runtime": "^6.23.0",
     "eslint": "^3.19.0",
-    "eslint-plugin-react": "^7.0.1"
+    "eslint-plugin-react": "^7.0.1",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-changed": "^3.1.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "rimraf": "^2.6.1",
+    "source-map-support": "^0.4.15"
   }
 }

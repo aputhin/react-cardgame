@@ -22,12 +22,16 @@
     "babel-runtime": "^6.23.0",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^7.0.1",
+    "express": "^4.15.3",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^6.1.2",
     "gulp-changed": "^3.1.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-nodemon": "^2.2.1",
     "gulp-sourcemaps": "^2.6.0",
+    "gulp-util": "^3.0.8",
+    "jasmine": "^2.6.0",
+    "pug": "^2.0.0-rc.1",
     "rimraf": "^2.6.1",
     "source-map-support": "^0.4.15"
   }

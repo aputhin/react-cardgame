@@ -20,6 +20,9 @@
     "no-console": "off"
   },
   "globals": {
-    "console": false
+    "console": false,
+    "process": false,
+    "IS_PRODUCTION": false,
+    "IS_DEVELOPMENT": false
   }
 }

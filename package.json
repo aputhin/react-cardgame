@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "A web-based version of Cards Against Humanity made in React, following \"React.js: Building Production Ready Apps, Start to Finish\" by Nelson LaQuet.",
   "main": "server.js",
-  "repository": { 
-      "type" : "git", 
-      "url" : "https://github.com/aputhin/react-cardgame"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aputhin/react-cardgame"
   },
   "scripts": {
     "test": "node ./tests.js",
@@ -32,6 +32,7 @@
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
+    "font-awesome": "^4.7.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-babel": "^6.1.2",
     "gulp-changed": "^3.1.0",

@@ -8,7 +8,7 @@ const vendor = [
 ]
 
 function createConfig(isDebug) {
-  const devtool = isDebug ? 'cheap-module-source-map' : null 
+  const devtool = isDebug ? 'cheap-module-source-map' : false 
   const plugins = [
     new webpack.optimize.CommonsChunkPlugin({ 
       name: 'vendor', 
@@ -36,6 +36,20 @@ function createConfig(isDebug) {
 
   if (isDebug) {
     console.log('oi')
+  } else {
+    plugins.push(
+      new ExtractTextPlugin('[name].css'),
+      new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }})
+    )
+
+    loaders.css.use = ExtractTextPlugin.extract({ 
+      fallback: 'style-loader',
+      use: 'css-loader'
+    })
+    loaders.sass.use = ExtractTextPlugin.extract({
+      fallback: 'style-loader', 
+      use: ['css-loader', 'sass-loader']
+    })
   }
 
   return {

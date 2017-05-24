@@ -35,7 +35,7 @@ function createConfig(isDebug) {
   const publicPath = '/build/'
 
   if (isDebug) {
-    console.log('oi')
+    console.log(`oi`)
   } else {
     plugins.push(
       new ExtractTextPlugin('[name].css'),

@@ -1,9 +1,10 @@
 import gulp from 'gulp'
 import path from 'path'
 import rimraf from 'rimraf'
-import child_process from 'child_process'
+import childProcess from 'child_process'
 import webpackConfig from './webpack.config.js' 
 import webpack from 'webpack'
+import webpackDevServer from 'webpack-dev-server'
 
 const $ = require('gulp-load-plugins')()
 
@@ -83,7 +84,7 @@ function runServer() {
 }
 
 function testServer(cb) {
-  child_process.exec('node ./tests.js', (err, stdout, stderr) => {
+  childProcess.exec('node ./tests.js', (err, stdout, stderr) => {
     console.log(stdout)
     console.log(stderr)
 
@@ -116,7 +117,25 @@ const consoleStats = {
   version: false
 }
 
-gulp.task('client:build', buildClient)
+gulp.task('client:clean', (cb) => {
+  rimraf('./public/build', () => cb())
+})
+
+gulp.task(
+  'client:build',
+  gulp.series( 
+   'client:clean',   
+    buildClient
+  )
+)
+
+gulp.task(
+  'client:dev', 
+  gulp.series( 
+   'client:clean',  
+   watchClient
+  )
+)
 
 function buildClient(cb) {
   webpack(webpackConfig, (err, stats) => {
@@ -129,3 +148,20 @@ function buildClient(cb) {
     cb()
   })
 }
+
+function watchClient() {
+  const compiler = webpack(webpackConfig)
+  const server = new webpackDevServer(compiler, {
+    publicPath: '/build/',
+    hot: true,
+    stats: consoleStats
+  })
+
+  server.listen(8080, () => {})
+}
+
+/**
+ * Misc
+ */
+gulp.task('dev', gulp.parallel('server:dev', 'client:dev'))
+gulp.task('build', gulp.parallel('server:build', 'client:build'))

@@ -154,7 +154,8 @@ function watchClient() {
   const server = new webpackDevServer(compiler, {
     publicPath: '/build/',
     hot: true,
-    stats: consoleStats
+    stats: consoleStats,
+    headers: { 'Access-Control-Allow-Origin': '*' }
   })
 
   server.listen(8080, () => {})

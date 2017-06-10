@@ -3,7 +3,6 @@ import http from 'http'
 
 import {isDev} from './settings'
 
-
 /**
  * Setup
  */

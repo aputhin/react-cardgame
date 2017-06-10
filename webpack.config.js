@@ -10,7 +10,7 @@ const vendor = [
 ]
 
 function createConfig(isDebug) {
-  const devtool = isDebug ? 'cheap-module-source-map' : false 
+  const devtool = isDebug ? 'eval-source-map' : false 
   const plugins = [
     new webpack.optimize.CommonsChunkPlugin({ 
       name: 'vendor', 

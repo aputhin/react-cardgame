@@ -44,6 +44,7 @@
     "json-loader": "^0.5.4",
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
+    "prop-types": "^15.5.10",
     "pug": "^2.0.0-rc.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

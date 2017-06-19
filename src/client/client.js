@@ -4,15 +4,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Router, browserHistory as history} from 'react-router'
 
-import * as A from './actions'
-import {Dispatcher} from 'shared/dispatcher'
+import { Dispatcher } from 'shared/dispatcher'
+// import * as A from './actions'
+import {StoreProvider} from './lib/component'
 import createStores from './stores'
 
 /**
  * services
  */
 const dispatcher = new Dispatcher()
-const services = new {dispatcher}
+const services = {dispatcher}
 
 /**
  * stores
@@ -25,9 +26,11 @@ const stores = createStores(services)
 function main() {
   const routes = require('./routes').default()
   ReactDOM.render(
-    <Router history={history}>
-      {routes}  
-    </Router>, 
+    <StoreProvider stores={stores} services={services}>
+      <Router history={history}>
+        {routes}  
+      </Router>
+    </StoreProvider>, 
     document.getElementById('mount'))
 }
 

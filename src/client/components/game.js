@@ -1,14 +1,15 @@
 import './game.scss'
 
-import React, { Component } from 'react'
+import React from 'react'
+import {ContainerBase} from '../lib/component'
 
-class GameContainer extends Component {
+class GameContainer extends ContainerBase {
   render() {
     return <p>GAME</p>
   }
 }
 
-class GameSidebar extends Component {
+class GameSidebar extends ContainerBase {
   render() {
     return <p>GAME SIDEBAR</p>
   }

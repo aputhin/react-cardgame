@@ -45,7 +45,7 @@ class LobbySidebar extends ContainerBase {
   constructor(props) {
     super(props)
 
-    this._login = () => console.log('TODO: implement login')
+    this._login = () => this.dispatch(A.dialogSet(A.DIALOG_LOGIN, true))
     this._createGame = () => console.log('TODO: create game')
   }
 

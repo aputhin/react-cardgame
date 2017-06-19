@@ -1,6 +1,7 @@
 import './lobby.scss'
 
 import React from 'react'
+import * as A from '../actions'
 import { ContainerBase } from '../lib/component'
 import Chat from './chat'
 

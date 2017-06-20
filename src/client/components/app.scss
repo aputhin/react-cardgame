@@ -44,4 +44,46 @@
       }
     }
   }
+
+  > .dialogs {
+    //display: none;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 600;
+    flex-direction: column;
+    align-content: center;
+
+    > section {
+      @include raised;
+      max-width: 600px;
+      margin: auto;
+      padding: 10px;
+
+      > h1 {
+        margin: 0;
+        font-size: 14px
+      }
+    }
+  }
+
+  &.dialogs-open {
+    > .dialogs {
+      display: flex;
+    }
+
+    &:after {
+      content: ' ';
+      background: transparentize($color-background, .3);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 500;
+    }
+  }
 }

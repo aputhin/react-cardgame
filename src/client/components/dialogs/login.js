@@ -7,7 +7,7 @@ import {ContainerBase} from '../../lib/component'
 class LoginDialog extends ContainerBase {
   render() {
     return (
-      <section class="c-login-dialog">
+      <section className="c-login-dialog">
         <h1>Login</h1>
         <p>Stuff and things!</p>
       </section>
@@ -16,6 +16,6 @@ class LoginDialog extends ContainerBase {
 }
 
 export default {
-  id: A.LOGIN_DIALOG,
+  id: A.DIALOG_LOGIN,
   component: LoginDialog
 }

@@ -19,6 +19,11 @@
       flex-grow: 1;
     }
   }
+
+  .c-chat {
+    flex: none;
+    height: 200px;
+  }
 }
 
 c.game-sidebar {

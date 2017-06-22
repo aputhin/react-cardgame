@@ -6,7 +6,7 @@ import _ from 'lodash'
 const defaultView = {
   id: 42,
   title: 'I haz game',
-  step: A.STEP_SETUP,
+  step: A.STEP_DISPOSED,
   options: {
     scoreLimit: 5,
     sets: ['1ed']
@@ -17,6 +17,12 @@ const defaultView = {
     {id: 3, name: 'josué', score: 1, isCzar: false, isPlaying: false, isWinner: false},
     {id: 4, name: 'miguel', score: 4, isCzar: true, isPlaying: false, isWinner: false},
     {id: 5, name: 'cecília', score: 4, isCzar: false, isPlaying: false, isWinner: false}
+  ],
+  messages: [
+    {index: 1, name: "tktktkt", message: "teste 123"},
+    {index: 2, name: "tktktkt", message: "teste 123"},
+    {index: 3, name: "tktktkt", message: "teste 123"},
+    {index: 4, name: "tktktkt", message: "teste 123"}
   ],
   round: null,
   timer: null

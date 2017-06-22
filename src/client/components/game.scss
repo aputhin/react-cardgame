@@ -1,5 +1,26 @@
 @import '../variables';
 
+.c-game {
+  display: flex;
+  flex-direction: column;
+
+  .notice {
+    font-weight: bold;
+    flex-grow: 1;
+    display: flex;
+
+    &.error {
+      color: $color-bad;
+    }
+
+    p {
+      align-self: center;
+      text-align: center;
+      flex-grow: 1;
+    }
+  }
+}
+
 c.game-sidebar {
   flex-grow: 1;
   display: flex;

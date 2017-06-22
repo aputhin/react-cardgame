@@ -4,18 +4,72 @@ import React from 'react'
 import * as A from '../actions'
 import {ContainerBase} from '../lib/component'
 
+import GameBoard from './game/game-board'
+import GameSetup from './game/game-setup'
+import Chat from './chat'
+
 class GameContainer extends ContainerBase {
+  constructor(props) {
+    super(props)
+
+    this._sendMessage = message => 
+      this.request(A.gameSendMessage(this.state.game.id, message))
+  }
+
   componentWillMount() {
-    const {stores: {app}} = this.context
+    const {stores: {app, game}} = this.context
     const {params} = this.props
     const gameId = parseInt(params.gameId)
 
+    this.subscribe(game.opJoinGame$, opJoinGame => this.setState({opJoinGame}))
+    this.subscribe(game.opSendMessage$, opSendMessage => this.setState({opSendMessage}))
+    this.subscribe(game.view$, game => this.setState({game}))
     this.subscribe(app.reconnected$, () => this.request(A.gameJoin(gameId)))
 
     this.request(A.gameJoin(gameId))
   }
+
   render() {
-    return <p>GAME</p>
+    const {opJoinGame, opSendMessage, game} = this.state
+    let body = <GameBoard />
+    let showChat = true
+
+    if (opJoinGame.inProgress) {
+      body = (<section className="notice">
+          <p>
+            Joining game...
+          </p>
+        </section>
+      )
+      showChat = false
+    } else if (opJoinGame.error) {
+      body = (<section className="notice error">
+          <p>
+            Cannot join game: {opJoinGame.error}
+          </p>
+        </section>
+      )
+      showChat = false
+    } else if (game.step === A.STEP_DISPOSED) {
+      body = (<section className="notice error">
+          <p>
+            Game doesn't exist!
+          </p>
+        </section>
+      )
+      showChat = false
+    } else if (game.step === A.STEP_SETUP) {
+      body = <GameSetup />
+    }
+
+    return (
+      <div className="c-game">
+        {body}
+        {!showChat ? null :
+          <Chat messages={game.messages} opSendMessage={opSendMessage} sendMessage={this._sendMessage} />
+        }
+      </div>
+    )
   }
 }
 

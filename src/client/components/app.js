@@ -1,13 +1,38 @@
 import './app.scss'
 
 import React from 'react'
+import * as A from '../actions'
 import { ContainerBase } from '../lib/component'
 import dialogTypes from './dialogs'
 
 class AppContainer extends ContainerBase {
   componentWillMount() {
-    const {stores: {app}} = this.context
+    const {stores: {app}, services: {dispatcher}} = this.context
+    const {router} = this.props
     this.subscribe(app.dialogs$, dialogs => this.setState({dialogs}))
+
+    this.subscribe(
+      dispatcher.onSuccess$(A.GAME_JOIN), 
+      action => {
+        const path = `/game/${action.gameId}`
+        if (router.location.pathname === path) {
+          return
+        }
+
+        router.push(path)
+      }
+    )
+
+    this.subscribe(
+      dispatcher.onSuccess$(A.LOBBY_JOIN), 
+      () => {
+        if (router.location.pathname ==='/') {
+          return
+        }
+
+        router.push('/')
+      }
+    )
   }
 
   render() {
@@ -34,10 +59,6 @@ class AppContainer extends ContainerBase {
         </div>
       </div>
     )
-  }
-
-  _click() {
-    console.log('-')
   }
 }
 

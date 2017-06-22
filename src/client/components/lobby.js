@@ -9,25 +9,19 @@ class LobbyContainer extends ContainerBase {
   constructor(props) {
     super(props)
 
-    this._joinGame = (game) => console.log(`TODO: JOIN GAME ${game.title}`)
+    this._joinGame = (game) => this.request(A.gameJoin(game.id))
 
-    this._sendMessage = (message) => console.log(`sending msg ${message}`)
+    this._sendMessage = (message) => this.request(A.lobbySendMessage(message))
+  }
+
+  componentWillMount() {
+    const {stores: {lobby}} = this.context
+    this.subscribe(lobby.opSendMessage$, opSendMessage => this.setState({opSendMessage}))
+    this.subscribe(lobby.view$, lobby => this.setState({lobby}))
   }
 
   render() {
-    const games = [
-      { title: 'Game 1', id: 1, players: ['one', 'two', 'three'] },
-      { title: 'Game 2', id: 2, players: ['one', 'two', 'three'] },
-      { title: 'Game 3', id: 3, players: ['one', 'two', 'three'] },
-      { title: 'Game 4', id: 4, players: ['one', 'two', 'three'] }
-    ]
-
-    const opSendMessage = {can: true, inProgress: false}
-    const messages = [
-      { index: 1, name: 'Person', message: 'test1' },
-      { index: 2, name: 'Person', message: 'test2' },
-      { index: 3, name: 'Person', message: 'test3' }
-    ]
+    const {lobby: {games, messages}, opSendMessage} = this.state
 
     return (
       <div className="c-lobby">
@@ -46,24 +40,28 @@ class LobbySidebar extends ContainerBase {
     super(props)
 
     this._login = () => this.dispatch(A.dialogSet(A.DIALOG_LOGIN, true))
-    this._createGame = () => console.log('TODO: create game')
+    this._createGame = () => this.request(A.gameCreate())
+  }
+
+  componentWillMount() {
+    const {stores: {user, game}} = this.context
+    this.subscribe(user.opLogin$, opLogin => this.setState({opLogin}))
+    this.subscribe(game.opCreateGame$, opCreateGame => this.setState({opCreateGame}))
   }
 
   render() {
-    const canLogin = true,
-      canCreateGame = true,
-      createGameInProgress = false
+    const {opLogin, opCreateGame} = this.state
 
     return (
       <section className="c-lobby-sidebar">
         <div className="m-sidebar-buttons">
-          {!canLogin ? null :
+          {!opLogin.can ? null :
             <button className="m-button primary" onClick={this._login}>Login</button>
           }
-          {!canCreateGame ? null :
+          {!opCreateGame.can ? null :
             <button 
               className="m-button good" 
-              disabled={createGameInProgress}
+              disabled={opCreateGame.inProgress}
               onClick={this._createGame}>
               Create Game
             </button>

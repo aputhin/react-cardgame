@@ -1,4 +1,4 @@
-import {Observable, BehaviorSubject} from 'rxjs'
+import {BehaviorSubject} from 'rxjs'
 import {validateName} from 'shared/validation/user'
 import {mapOp$} from 'shared/observable'
 import * as A from '../actions'
@@ -35,7 +35,7 @@ export default class UserStore {
 
     this.opLogin$ = mapOp$(
       dispatcher.on$(A.USER_LOGIN),
-      this.details$.map(details => !details.isLogedIn)
+      this.details$.map(details => !details.isLoggedIn)
     )
   }
 }

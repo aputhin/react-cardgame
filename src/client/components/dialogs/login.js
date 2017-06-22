@@ -30,6 +30,10 @@ class LoginDialog extends ContainerBase {
     })
   }
 
+  componentDidMount() {
+    this._username.input.focus()
+  }
+
   render() {
     const {opLogin} = this.state
     const disabled = opLogin.inProgress

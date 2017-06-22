@@ -12,11 +12,11 @@ const defaultView = {
     sets: ['1ed']
   },
   players: [
-    {id: 1, name: 'arthur', score: 0, isCzar: false, isPlaying: false, isWinner: false},
-    {id: 2, name: 'carlos', score: 0, isCzar: false, isPlaying: false, isWinner: false},
-    {id: 3, name: 'josué', score: 0, isCzar: false, isPlaying: false, isWinner: false},
-    {id: 4, name: 'miguel', score: 0, isCzar: false, isPlaying: false, isWinner: false},
-    {id: 5, name: 'cecília', score: 0, isCzar: false, isPlaying: false, isWinner: false}
+    {id: 1, name: 'arthur', score: 6, isCzar: false, isPlaying: false, isWinner: true},
+    {id: 2, name: 'carlos', score: 2, isCzar: false, isPlaying: true, isWinner: false},
+    {id: 3, name: 'josué', score: 1, isCzar: false, isPlaying: false, isWinner: false},
+    {id: 4, name: 'miguel', score: 4, isCzar: true, isPlaying: false, isWinner: false},
+    {id: 5, name: 'cecília', score: 4, isCzar: false, isPlaying: false, isWinner: false}
   ],
   round: null,
   timer: null

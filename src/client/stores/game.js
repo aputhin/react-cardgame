@@ -6,14 +6,14 @@ import _ from 'lodash'
 const defaultView = {
   id: 42,
   title: 'I haz game',
-  step: A.STEP_SETUP,
+  step: A.STEP_CHOOSE_WHITES,
   options: {
     scoreLimit: 5,
     sets: ['1ed']
   },
   players: [
-    {id: 1, name: 'arthur', score: 6, isCzar: false, isPlaying: false, isWinner: true},
-    {id: 2, name: 'carlos', score: 2, isCzar: false, isPlaying: true, isWinner: false},
+    {id: 1, name: 'arthur', score: 6, isCzar: false, isPlaying: true, isWinner: false},
+    {id: 2, name: 'carlos', score: 2, isCzar: false, isPlaying: false, isWinner: false},
     {id: 3, name: 'josué', score: 1, isCzar: false, isPlaying: false, isWinner: false},
     {id: 4, name: 'miguel', score: 4, isCzar: true, isPlaying: false, isWinner: false},
     {id: 5, name: 'cecília', score: 4, isCzar: false, isPlaying: false, isWinner: false}
@@ -24,14 +24,36 @@ const defaultView = {
     {index: 3, name: "tktktkt", message: "teste 123"},
     {index: 4, name: "tktktkt", message: "teste 123"}
   ],
-  round: null,
+  round: {
+    blackCard: {
+      id: 1,
+      text: 'Thats where youre wrong',
+      set: '1ed',
+      whiteCardCount: 1
+    },
+    stacks: [
+      {id: 1, count: 3},
+      {id: 2, count: 1},
+      {id: 3, count: 2}
+    ]
+  },
   timer: null
 }
 
 const defaultPlayerView = {
   id: 1,
-  hand: [],
-  stack: null
+  hand: [
+      {id: 2, text: 'le card 2', set: '1ed'},
+      {id: 3, text: 'le card 3', set: '1ed'},
+      {id: 4, text: 'le card 4', set: '1ed'},
+      {id: 6, text: 'le card 6', set: '1ed'}
+  ],
+  stack: {
+    id: 2,
+    cards: [
+      {id: 5, text: 'le card 5', set: '1ed'},
+    ]
+  }
 }
 
 export default class GameStore {

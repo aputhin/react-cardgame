@@ -32,9 +32,9 @@ const defaultView = {
       whiteCardCount: 1
     },
     stacks: [
-      {id: 1, count: 3},
-      {id: 2, count: 1},
-      {id: 3, count: 2}
+      {id: 1, cards: [{id: 1, text: 'hey1', set: 'lol4'}]},
+      {id: 2, cards: [{id: 2, text: 'hey2', set: 'lol5'}]},
+      {id: 3, cards: [{id: 3, text: 'hey3', set: 'lol6'}]},
     ]
   },
   timer: null

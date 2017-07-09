@@ -1,7 +1,6 @@
 import './game-board.scss'
 
 import React from 'react'
-import _ from 'lodash'
 import * as A from '../../actions'
 import {ContainerBase} from '../../lib/component'
 
@@ -39,7 +38,7 @@ export default class GameBoard extends ContainerBase {
     const {stores: {game}} = this.context
     this.subscribe(game.view$, game => this.setState({game}))
     this.subscribe(game.player$, player => this.setState({player}))
-    this.subscribe(game.opSelectCard$, opSelectCard => this.setState({opSelectCard}))
+    this.subscribe(game.opSelectCard$, opSelectCard => this.setState({opSelectCard, isHandOpen: opSelectCard}))
     this.subscribe(game.opSelectStack$, opSelectStack => this.setState({opSelectStack}))
   }
 

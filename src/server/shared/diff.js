@@ -134,8 +134,6 @@ export function makeDiffObject(before, after, location = '') {
   }
 
   return changed ? obj : IS_UNCHANGED
-  
-  return IS_UNCHANGED
 }
 
 export function makeDiffScalar(before, after) {
@@ -143,5 +141,85 @@ export function makeDiffScalar(before, after) {
 }
 
 export function mergeDiff(base, diff, location = '') {
-  return base
+  if (diff == null)
+    return null
+
+  if (diff.hasOwnProperty('$remove'))
+    return undefined
+
+  if (diff.hasOwnProperty('$set'))
+    return diff.$set
+
+  if (diff.hasOwnProperty('$splice')) {
+    const arr = base.slice()
+    arr.splice(...diff.$splice)
+    return arr
+  }
+
+  if (diff.hasOwnProperty('$update')) {
+    const updateItems = diff.$update
+    const idOrder = diff.ids
+
+    if (idOrder) {
+      const result = new Array(idOrder.length)
+      const oldItems = !base
+        ? {}
+        : base.reduce((obj, item) => {
+          obj[item.id] = item
+          return obj
+        }, {})
+
+      for (let i = 0; i < idOrder.length; i++) {
+        const id = idOrder[i]
+        if (!updateItems.hasOwnProperty(id)) {
+          result[i] = oldItems[id]
+          continue
+        }
+
+        const newItem = mergeDiff(oldItems[id], updateItems[id])
+        newItem.id = id
+        result[i] = newItem
+      }
+
+      return result
+    } else {
+      const result = new Array(base.length)
+      for (let i = 0; i < base.length; i++) {
+        const item = base[i]
+        result[i] = updateItems.hasOwnProperty(item.id)
+          ? mergeDiff(base[i], updateItems[item.id])
+          : base[i]
+      }
+
+      return result
+    }
+  }
+
+  if (_.isArray(diff))
+    return diff
+
+  if (_.isObject(diff)) {
+    if (base != null && !_.isObject(base))
+      throw new Error(`${location} you can't change the type of a value`)
+
+    if (!base)
+      return diff
+
+    const copy = {...base}
+    for (let key in diff) {
+      if (!diff.hasOwnProperty(key))
+        continue
+
+      const value = diff[key]
+      const result = mergeDiff(copy[key], value, `${location}.${key}`)
+      if (typeof(result) == 'undefined')
+        delete copy[key]
+      else
+        copy[key] = result
+    }
+
+    return copy
+  }
+
+  return diff
 }

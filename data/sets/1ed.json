@@ -1,0 +1,27 @@
+{
+	"name": "First Edition",
+	"blackCards": [
+		"Who stole the cookies from the cookie jar?",
+		"I wish I hadn't lost the instruction manual for {}.",
+		"What's the next superhero?",
+		"When I'm in prison, I'll have {} smuggled in.",
+		"Due to a PR fiasco, Walmart no longer offers {}.",
+		"Life was difficult for cavemen before {}.",
+		"In his new summer comedy, Rob Schneider is {} trapped in the body of {}."
+	],
+	"whiteCards": [
+		"Eastern European Turbo-Folk music.",
+		"This answer is postmodern.",
+		"Have some more kugel.",
+		"Crippling debt.",
+		"(I am doing Kegels right now.)",
+		"Drum circles.",
+		"Inappropriate yelling.",
+		"Sobbing into a Hungry-Man® Frozen Dinner.",
+		"Ring Pops™.",
+		"Tiger Woods.",
+		"Mr. Snuffleupagus.",
+		"Faith healing.",
+		"Bananas in Pajamas."
+	]
+}

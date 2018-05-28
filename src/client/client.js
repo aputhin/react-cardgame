@@ -4,6 +4,7 @@ import _ from 'lodash'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Router, browserHistory as history} from 'react-router'
+import io from 'socket.io-client'
 
 import { Dispatcher } from 'shared/dispatcher'
 import * as A from './actions'
@@ -14,11 +15,14 @@ import createStores from './stores'
  * services
  */
 const dispatcher = new Dispatcher()
-const services = {dispatcher}
+const socket = io()
+const services = {dispatcher, socket}
 
 if (IS_DEVELOPMENT) {
   dispatcher.on('*', printAction)
 }
+
+socket.on('action', action => dispatcher.emit(action))
 
 /**
  * stores
@@ -33,9 +37,9 @@ function main() {
   ReactDOM.render(
     <StoreProvider stores={stores} services={services}>
       <Router history={history}>
-        {routes}  
+        {routes}
       </Router>
-    </StoreProvider>, 
+    </StoreProvider>,
     document.getElementById('mount'))
 }
 
@@ -60,7 +64,7 @@ function printAction(action) {
   if (action.hasOwnProperty('status')) {
     let style = null
     switch(action.status) {
-      case A.STATUS_REQUEST: 
+      case A.STATUS_REQUEST:
         style = 'color: blue'
         break
       case A.STATUS_FAIL:
@@ -71,7 +75,7 @@ function printAction(action) {
         break
     }
 
-    console.log(`%c${action.type}`, 
+    console.log(`%c${action.type}`,
       `${style}; font-weigth: bold; background: #eee; width: 100%; display: block;`)
   } else {
     console.log(`%c${action.type}`, 'background: #ddd;')

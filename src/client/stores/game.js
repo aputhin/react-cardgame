@@ -6,7 +6,7 @@ import _ from 'lodash'
 const defaultView = {
   id: 42,
   title: 'I haz game',
-  step: A.STEP_CHOOSE_WHITES,
+  step: A.STEP_SETUP,
   options: {
     scoreLimit: 5,
     sets: ['1ed']

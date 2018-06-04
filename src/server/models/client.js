@@ -84,6 +84,41 @@ export class Client extends Dispatcher {
 
         this.setHandlers(new LobbyHandlers(this, lobby))
         this.succeed(action)
+      },
+
+      [A.GAME_CREATE]: (action) => {
+        if (!this.isLoggedIn) {
+          this.fail(action, 'You must be logged in')
+          return
+        }
+
+        let game
+        try {
+          game = lobby.createGame(`${this.name}'s game`)
+          this.setHandlers(new GameHandlers(this, game))
+          this.succeed(action)
+          this.succeed(A.gameJoin(game.id))
+        } catch (e) {
+          if (game) game.dispose()
+          this.fail(action)
+          throw e
+        }
+      },
+
+      [A.GAME_JOIN]: (action) => {
+        if (this.handlers instanceof GameHandlers && this.handlers.game.id === action.gameId) {
+          this.succeed(action)
+          return
+        }
+
+        const game = lobby.getGameById(action.gameId)
+        if (!game) {
+          this.fail(action, 'Invalid game')
+          return
+        }
+
+        this.setHandlers(new GameHandlers(this, game))
+        this.succeed(action)
       }
     })
   }

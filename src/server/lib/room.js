@@ -34,12 +34,12 @@ export class RoomBase {
     }
 
     this._inTick = true
-    if (action) {
-      try {
+    try {
+      if (action) {
         action()
-      } finally {
-        this._inTick = false
       }
+    } finally {
+      this._inTick = false
     }
 
     this._postTick()

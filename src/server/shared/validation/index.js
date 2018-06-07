@@ -36,6 +36,9 @@ export class Validator {
   }
 
   assert(condition, error) {
-    condition && this.push(error)
+    if (condition)
+      return
+
+    this.push(error)
   }
 }

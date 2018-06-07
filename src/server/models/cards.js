@@ -29,7 +29,7 @@ export class CardDatabase {
         id: `b-${setName}-${index}`,
         text: card.replace(PLACEHOLDER_REGEX, '____'),
         set: setName,
-        whiteCardCounter: getWhiteCardCount(card),
+        whiteCardCount: getWhiteCardCount(card),
       })),
       whiteCards: set.whiteCards.map((card, index) => ({
         id: `w-${setName}-${index}`,
@@ -63,7 +63,7 @@ export class Deck {
     this._whiteDeck = whiteCards
     this._blackDeck = blackCards
     this._whiteDiscard = []
-    this.blackIndex = 0
+    this._blackIndex = 0
   }
 
   drawWhiteCards(count) {

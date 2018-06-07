@@ -21,7 +21,29 @@ export default class GameHandlers extends HandlerBase {
 
       client.onRequest(A.GAME_SET_OPTIONS, action => {
         const validator = game.setOptions(action.options)
-        client.response(action, validator)
+        client.respond(action, validator)
+      }),
+
+      client.onRequest(A.GAME_START, action => {
+        client.respond(action, game.start())
+      }),
+
+      client.onRequest(A.GAME_SELECT_CARD, action => {
+        if (!this.player) {
+          client.fail(action, 'You are not in this game')
+          return
+        }
+
+        client.respond(action, this.player.selectCard(action.cardId))
+      }),
+
+      client.onRequest(A.GAME_SELECT_STACK, action => {
+        if (!this.player) {
+          client.fail(action, 'You are not in this game')
+          return
+        }
+
+        client.respond(action, this.player.selectStack(action.stackId))
       })
     )
 

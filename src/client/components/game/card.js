@@ -24,7 +24,7 @@ export default function Card(props) {
         <div className="inner">
           <span className="text">{card.text}</span>
           <span className="set">{card.set}</span>
-          {!card.whiteCardCount ? null : 
+          {!card.whiteCardCount ? null :
             <span className="white-count">
               Pick <span>{card.whiteCardCount}</span>
             </span>}

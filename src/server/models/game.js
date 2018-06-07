@@ -146,7 +146,7 @@ export class Game extends RoomBase {
     }
 
     const czar = this._nextCzarIndex
-      ? this.players[this._nextCzarIndex] % this.players.length
+      ? this.players[this._nextCzarIndex % this.players.length]
       : this.players[0]
 
     delete this._nextCzarIndex
@@ -155,6 +155,56 @@ export class Game extends RoomBase {
     this.step = A.STEP_CHOOSE_WHITES
     for (let player of this.players)
       player.onRoundStart()
+  }
+
+  _postTick() {
+    if (!this.isDisposed && this.step != A.STEP_WAIT && this.step != A.STEP_SETUP) {
+      if (this.players.length < MINIMUM_PLAYERS) {
+        this._transitionStep(A.WAIT_GAME_OVER, A.WAIT_REASON_TOO_FEW_PLAYERS)
+      } else if (!this.players.includes(this.round.czar)) {
+        this._transitionStep(A.WAIT_ROUND_OVER, A.WAIT_REASON_CZAR_LEFT)
+      } else if (_.keys(this.round.stacks).length == 0) {
+        this._transitionStep(A.WAIT_ROUND_OVER, A.WAIT_REASON_TOO_FEW_PLAYERS)
+      } else if (this.step == A.STEP_CHOOSE_WHITES && this.round.areAllStacksFinished) {
+        this.round.revealStacks()
+        this.step = A.STEP_JUDGE_STACKS
+      } else if (this.step == A.STEP_JUDGE_STACKS && this.round.winningStack) {
+        this.round.winningStack.player.addPoints(1)
+
+        if (_.some(this.players, p => p.score >= this.options.scoreLimit)) {
+          this._transitionStep(A.WAIT_GAME_OVER, A.WAIT_REASON_GAME_FINISHED)
+        } else {
+          this._nextCzarIndex = (this.players.indexOf(this.round.czar) + 1) % this.players.length
+          this._transitionStep(A.WAIT_ROUND_OVER, A.WAIT_REASON_ROUND_FINISHED)
+        }
+      }
+    }
+
+    if (this.players.length == 0) {
+      this.dispose()
+    }
+  }
+
+  _transitionStep(type, reason) {
+    this._ensureActive()
+    this.step = A.STEP_WAIT
+    this.timer = { timeout: 5000, type, reason }
+    setTimeout(() => {
+      if (this.isDisposed) return
+
+      this._tick(() => {
+        this.timer = null
+        if (type == A.WAIT_GAME_OVER) {
+          this.step = A.STEP_SETUP
+          this.round = null
+        } else if (type == A.WAIT_ROUND_OVER) {
+          for (let player of this.players)
+            player.onRoundEnd()
+
+          this._nextRound(reason != A.WAIT_REASON_ROUND_FINISHED)
+        }
+      })
+    }, 5000)
   }
 
   dispose() {

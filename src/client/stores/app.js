@@ -1,5 +1,4 @@
 import _ from 'lodash'
-import {Observable, BehaviorSubject} from 'rxjs'
 import * as A from '../actions'
 import {createView$} from '../lib/stores'
 

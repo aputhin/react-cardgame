@@ -1,4 +1,3 @@
-import {BehaviorSubject} from 'rxjs'
 import {validateName} from 'shared/validation/user'
 import {mapOp$} from 'shared/observable'
 import * as A from '../actions'
